@@ -1,4 +1,4 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 ```
    ___                    _       __  __    ___  ___
@@ -9,44 +9,39 @@
 
 **🔌 The Universal MCP Resource Server**
 
-*Mount any folder. Feed any AI. Zero code required.*
+_Mount any folder, URL, or database. Feed any AI. Zero code required._
 
 [![Node.js](https://img.shields.io/badge/Node.js-≥18-339933?logo=node.js)](https://nodejs.org)
-[![MCP](https://img.shields.io/badge/Protocol-MCP-blue?logo=data:image/svg+xml;base64,)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 </div>
 
 ---
 
-## 🤔 Why Omni-MCP?
+## 🚀 核心亮点
 
-Your AI agent is brilliant — but **blind**. It can't see your project docs, your research notes, or that CSV buried three folders deep. Every time you need it to read a file, you copy-paste like it's 2005.
-
-**Omni-MCP changes that in one command.**
-
-It turns any folder on your machine into a live knowledge base that AI agents can query directly through the [Model Context Protocol](https://modelcontextprotocol.io). No uploading. No embedding pipelines. No infrastructure. Just mount a folder and your agent sees everything — instantly.
-
-> 💡 Think of it as a **USB drive for your AI's brain**.
+- **📂 文件夹挂载** — 一句话挂载任意目录，`.txt` / `.md` 文件即时可读
+- **🌐 网页抓取** — 输入 URL，自动转 Markdown，缓存持久化
+- **🗄️ SQLite 适配器** — 挂载数据库，自动暴露 Schema，安全执行 SELECT 查询
+- **📟 TUI 仪表盘** — 基于 Ink 的终端 UI，实时显示状态、挂载源、AI 活动
+- **💾 持久化配置** — 挂载一次，重启自动恢复
 
 ---
 
-## ⚡ Quick Start
+## 🛠️ 快速开始
 
-### 1. Install
+### 1. 安装
 
 ```bash
-git clone https://github.com/brooks/omni-mcp.git
+git clone https://github.com/DEM-YU/omni-mcp.git
 cd omni-mcp
 npm install
 ```
 
-### 2. Connect to Your AI Client
-
-Add this to your MCP client configuration:
+### 2. 配置 MCP 客户端
 
 <details>
-<summary>🌌 <b>Antigravity</b> (<code>~/.gemini/antigravity/mcp_config.json</code>)</summary>
+<summary>🌌 <b>Antigravity</b>（<code>~/.gemini/antigravity/mcp_config.json</code>）</summary>
 
 ```json
 {
@@ -59,10 +54,11 @@ Add this to your MCP client configuration:
   }
 }
 ```
+
 </details>
 
 <details>
-<summary>🧠 <b>Claude Desktop</b> (<code>claude_desktop_config.json</code>)</summary>
+<summary>🧠 <b>Claude Desktop</b>（<code>claude_desktop_config.json</code>）</summary>
 
 ```json
 {
@@ -75,97 +71,80 @@ Add this to your MCP client configuration:
   }
 }
 ```
+
 </details>
 
-### 3. Start Talking to Your Agent
+### 3. 开始对话
 
-Once connected, simply tell your AI:
+连接后，直接对 AI 说：
 
 ```
 "请把 /Users/me/Documents 挂载为知识库"
+"帮我把这个网页挂载：https://example.com"
+"挂载数据库 /path/to/data.db，然后查询所有用户"
 ```
-
-or
-
-```
-"Mount the folder /Users/me/research as a new source"
-```
-
-The agent will call `mount_folder` (or its alias `add_new_source`), and every `.txt` and `.md` file becomes instantly readable. ✨
-
-### 4. Run Standalone (Optional)
-
-```bash
-npm start
-```
-
-You'll see the **live TUI dashboard** on stderr showing server status, mounts, and real-time AI activity.
 
 ---
 
-## ✨ Features
+## 📂 支持的插槽
 
-### 📂 Dynamic Folder Mounting
-Mount any directory at runtime — no config files to edit, no restarts needed. Your agent can call `mount_folder` or `add_new_source` conversationally.
+### 本地文件夹
 
-### 🎨 Live TUI Dashboard
-A gorgeous terminal UI built with [Ink](https://github.com/vadimdemedes/ink) (React for CLIs):
-- ASCII art banner
-- Real-time server status indicator
-- Mounted sources tree view
-- Activity monitor — flashes when your AI reads a file
+| 工具             | 说明                                     |
+| ---------------- | ---------------------------------------- |
+| `mount_folder`   | 挂载本地文件夹，暴露 `.txt` / `.md` 文件 |
+| `add_new_source` | `mount_folder` 的别名                    |
+| `unmount_folder` | 卸载已挂载的文件夹                       |
 
-### 💾 Persistent Configuration
-Mounted paths are saved to `config.json` and automatically restored on restart. Mount once, remember forever.
+### 网页
 
-### 🛡️ Smart Duplicate Detection
-Re-mounting the same path? Omni-MCP catches it and lets you know — no duplicates, no confusion.
+| 工具        | 说明                                      |
+| ----------- | ----------------------------------------- |
+| `mount_url` | 抓取网页，转为 Markdown，缓存并暴露为资源 |
 
-### 🔒 Non-Blocking Architecture
-The TUI renders to `stderr` while MCP JSON-RPC flows through `stdout/stdin`. Zero interference, zero dropped messages.
+### SQLite 数据库
 
----
+| 工具           | 说明                                           |
+| -------------- | ---------------------------------------------- |
+| `mount_sqlite` | 挂载 SQLite 数据库（只读），自动暴露 Schema    |
+| `query_sqlite` | 安全执行 SELECT 查询，JSON 返回（上限 100 行） |
 
-## 🛠️ Available Tools
+### 通用
 
-| Tool | Description |
-|---|---|
-| `mount_folder` | Mount a local folder as a resource source |
-| `add_new_source` | Alias for `mount_folder` |
-| `unmount_folder` | Remove a previously mounted folder |
-| `list_mounts` | Show all currently mounted directories |
+| 工具          | 说明                                 |
+| ------------- | ------------------------------------ |
+| `list_mounts` | 列出所有已挂载的文件夹、网页和数据库 |
 
 ---
 
-## 📁 Project Structure
+## 📟 TUI 仪表盘
+
+启动后在终端（stderr）渲染实时仪表盘：
+
+- **状态指示** — 服务器在线 / 启动中
+- **📂 Folders** — 已挂载文件夹列表
+- **🌐 Web Pages** — 已挂载网页列表
+- **🗄️ Databases** — 已连接数据库列表
+- **⚡ Live Activity** — AI 读取资源时实时闪烁
+
+> 💡 TUI 渲染在 `stderr`，MCP JSON-RPC 走 `stdout/stdin`，互不干扰。
+
+---
+
+## 📁 项目结构
 
 ```
 omni-mcp/
 ├── src/
-│   ├── index.ts          # MCP server + tool handlers
-│   ├── events.ts         # Event bus (server ↔ dashboard)
-│   └── dashboard.tsx     # Ink TUI dashboard
-├── test-resources/       # Sample files for testing
-├── config.json           # Auto-generated mount persistence (gitignored)
+│   ├── index.ts          # MCP Server + 全部 Tool 逻辑
+│   ├── events.ts         # EventBus（Server ↔ Dashboard）
+│   └── dashboard.tsx     # Ink TUI 仪表盘
+├── test-resources/       # 测试用文件
+├── config.json           # 自动生成的持久化配置（已 gitignore）
 ├── package.json
 ├── tsconfig.json
 └── README.md
 ```
-
----
-
-## 🗺️ Roadmap
-
-| Status | Feature | Description |
-|---|---|---|
-| ✅ | Local File Mounting | Mount any folder, expose `.txt`/`.md` files |
-| ✅ | TUI Dashboard | Live terminal UI with activity monitoring |
-| ✅ | Persistent Config | `config.json` remembers your mounts |
-| 🔜 | **Web Adapter** | Mount URLs and web pages as resources |
-| 🔜 | **Database Connector** | Query SQLite / PostgreSQL directly from your agent |
-| 🔜 | **File Watcher** | Hot-reload resources when files change on disk |
-| 🔜 | **Custom Filters** | Mount with glob patterns (e.g. `*.py`, `docs/**`) |
-| 💡 | **Multi-Agent Sync** | Share mounted resources across multiple agents |
 
 ---
 
@@ -179,7 +158,6 @@ MIT © Brooks
 
 **Built with 🧡 for the AI-native developer workflow.**
 
-*If Omni-MCP saved you from copy-pasting, give it a ⭐*
+_If Omni-MCP saved you from copy-pasting, give it a ⭐_
 
 </div>
-]]>
