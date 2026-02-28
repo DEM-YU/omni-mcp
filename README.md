@@ -13,19 +13,19 @@ _Mount any folder, URL, or database. Feed any AI. Zero code required._
 
 ---
 
-## 🚀 核心亮点
+## 🚀 Highlights
 
-- **📂 文件夹挂载** — 一句话挂载任意目录，`.txt` / `.md` 文件即时可读
-- **🌐 网页抓取** — 输入 URL，自动转 Markdown，缓存持久化
-- **🗄️ SQLite 适配器** — 挂载数据库，自动暴露 Schema，安全执行 SELECT 查询
-- **📟 TUI 仪表盘** — 基于 Ink 的终端 UI，实时显示状态、挂载源、AI 活动
-- **💾 持久化配置** — 挂载一次，重启自动恢复
+- **📂 Folder Mounting** — Mount any directory with one command; `.txt` / `.md` files become instantly readable
+- **🌐 Web Scraping** — Provide a URL, auto-convert to Markdown, cached and persisted
+- **🗄️ SQLite Adapter** — Mount a database, auto-expose its schema, safely run SELECT queries
+- **📟 TUI Dashboard** — Ink-powered terminal UI with real-time status, mounts, and AI activity
+- **💾 Persistent Config** — Mount once, automatically restored on restart
 
 ---
 
-## 🛠️ 快速开始
+## 🛠️ Quick Start
 
-### 1. 安装
+### 1. Install
 
 ```bash
 git clone https://github.com/DEM-YU/omni-mcp.git
@@ -33,10 +33,10 @@ cd omni-mcp
 npm install
 ```
 
-### 2. 配置 MCP 客户端
+### 2. Connect to Your AI Client
 
 <details>
-<summary>🌌 <b>Antigravity</b>（<code>~/.gemini/antigravity/mcp_config.json</code>）</summary>
+<summary>🌌 <b>Antigravity</b> (<code>~/.gemini/antigravity/mcp_config.json</code>)</summary>
 
 ```json
 {
@@ -53,7 +53,7 @@ npm install
 </details>
 
 <details>
-<summary>🧠 <b>Claude Desktop</b>（<code>claude_desktop_config.json</code>）</summary>
+<summary>🧠 <b>Claude Desktop</b> (<code>claude_desktop_config.json</code>)</summary>
 
 ```json
 {
@@ -69,73 +69,73 @@ npm install
 
 </details>
 
-### 3. 开始对话
+### 3. Start Talking
 
-连接后，直接对 AI 说：
+Once connected, just tell your AI:
 
 ```
-"请把 /Users/me/Documents 挂载为知识库"
-"帮我把这个网页挂载：https://example.com"
-"挂载数据库 /path/to/data.db，然后查询所有用户"
+"Mount the folder /Users/me/research as a knowledge base"
+"Scrape this page: https://example.com"
+"Mount the database /path/to/data.db and query all users"
 ```
 
 ---
 
-## 📂 支持的插槽
+## 📂 Supported Sources
 
-### 本地文件夹
+### Local Folders
 
-| 工具             | 说明                                     |
-| ---------------- | ---------------------------------------- |
-| `mount_folder`   | 挂载本地文件夹，暴露 `.txt` / `.md` 文件 |
-| `add_new_source` | `mount_folder` 的别名                    |
-| `unmount_folder` | 卸载已挂载的文件夹                       |
+| Tool             | Description                                         |
+| ---------------- | --------------------------------------------------- |
+| `mount_folder`   | Mount a local folder, exposing `.txt` / `.md` files |
+| `add_new_source` | Alias for `mount_folder`                            |
+| `unmount_folder` | Unmount a previously mounted folder                 |
 
-### 网页
+### Web Pages
 
-| 工具        | 说明                                      |
-| ----------- | ----------------------------------------- |
-| `mount_url` | 抓取网页，转为 Markdown，缓存并暴露为资源 |
+| Tool        | Description                                                           |
+| ----------- | --------------------------------------------------------------------- |
+| `mount_url` | Fetch a web page, convert to Markdown, cache and expose as a resource |
 
-### SQLite 数据库
+### SQLite Databases
 
-| 工具           | 说明                                           |
-| -------------- | ---------------------------------------------- |
-| `mount_sqlite` | 挂载 SQLite 数据库（只读），自动暴露 Schema    |
-| `query_sqlite` | 安全执行 SELECT 查询，JSON 返回（上限 100 行） |
+| Tool           | Description                                                |
+| -------------- | ---------------------------------------------------------- |
+| `mount_sqlite` | Mount a SQLite database (read-only), auto-expose schema    |
+| `query_sqlite` | Safely execute SELECT queries, returns JSON (max 100 rows) |
 
-### 通用
+### General
 
-| 工具          | 说明                                 |
-| ------------- | ------------------------------------ |
-| `list_mounts` | 列出所有已挂载的文件夹、网页和数据库 |
-
----
-
-## 📟 TUI 仪表盘
-
-启动后在终端（stderr）渲染实时仪表盘：
-
-- **状态指示** — 服务器在线 / 启动中
-- **📂 Folders** — 已挂载文件夹列表
-- **🌐 Web Pages** — 已挂载网页列表
-- **🗄️ Databases** — 已连接数据库列表
-- **⚡ Live Activity** — AI 读取资源时实时闪烁
-
-> 💡 TUI 渲染在 `stderr`，MCP JSON-RPC 走 `stdout/stdin`，互不干扰。
+| Tool          | Description                                        |
+| ------------- | -------------------------------------------------- |
+| `list_mounts` | List all mounted folders, web pages, and databases |
 
 ---
 
-## 📁 项目结构
+## 📟 TUI Dashboard
+
+A live terminal dashboard renders on stderr at startup:
+
+- **Status Indicator** — Server online / starting
+- **📂 Folders** — Mounted folder tree
+- **🌐 Web Pages** — Mounted URL list
+- **🗄️ Databases** — Connected database list
+- **⚡ Live Activity** — Flashes in real-time when AI reads a resource
+
+> 💡 TUI renders to `stderr`; MCP JSON-RPC flows through `stdout/stdin` — zero interference.
+
+---
+
+## 📁 Project Structure
 
 ```
 omni-mcp/
 ├── src/
-│   ├── index.ts          # MCP Server + 全部 Tool 逻辑
-│   ├── events.ts         # EventBus（Server ↔ Dashboard）
-│   └── dashboard.tsx     # Ink TUI 仪表盘
-├── test-resources/       # 测试用文件
-├── config.json           # 自动生成的持久化配置（已 gitignore）
+│   ├── index.ts          # MCP Server + all tool handlers
+│   ├── events.ts         # Event bus (Server ↔ Dashboard)
+│   └── dashboard.tsx     # Ink TUI dashboard
+├── test-resources/       # Sample files for testing
+├── config.json           # Auto-generated persistence (gitignored)
 ├── package.json
 ├── tsconfig.json
 └── README.md
