@@ -1,0 +1,2 @@
+Hello from Omni-MCP!
+This is a sample .txt file exposed as an MCP Resource.

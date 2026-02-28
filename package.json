@@ -1,0 +1,55 @@
+{
+  "name": "omni-mcp",
+  "version": "1.0.0",
+  "description": "🔌 Universal MCP resource server — dynamically mount any local folder and expose its files to AI agents via the Model Context Protocol. Features a live TUI dashboard, persistent configuration, and zero-code setup.",
+  "main": "src/index.ts",
+  "bin": {
+    "omni-mcp": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx --watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-agent",
+    "resources",
+    "local-files",
+    "tui",
+    "dashboard",
+    "claude",
+    "antigravity",
+    "llm-tools"
+  ],
+  "author": "Brooks",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brooks/omni-mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "better-sqlite3": "^12.6.2",
+    "figlet": "^1.10.0",
+    "ink": "^6.8.0",
+    "react": "^19.2.4",
+    "turndown": "^7.2.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^25.3.2",
+    "@types/react": "^19.2.14",
+    "@types/turndown": "^5.0.6",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
